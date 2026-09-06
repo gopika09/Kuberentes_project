@@ -22,4 +22,4 @@ jobs:
 
       - name: Validate Kubernetes manifests
         run: |
-          kubectl apply --dry-run=client -f kubernetes_project
+          kubectl apply --dry-run=client -f terraform
