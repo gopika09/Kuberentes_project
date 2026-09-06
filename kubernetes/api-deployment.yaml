@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      serviceAccountName: k8-serviceaccount
+      containers:
+      - name: api
+        image: hashicorp/http-echo:1.0
+        args:
+          - "-text=Hello from my REST API"
+        envFrom:
+        - configMapRef:
+            name: k8-configmap    
+        ports:
+        - containerPort: 5678
