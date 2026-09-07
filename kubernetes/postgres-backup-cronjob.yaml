@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: backup
+spec:
+  schedule: "0 2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+             labels:
+                backup: postgres
+        spec:
+          containers:
+          - name: backup
+            image: postgres:16
+            command:
+            - /bin/sh
+            - -c
+            - |
+              pg_dump \
+                -h postgresql-service.default.svc.cluster.local \
+                -U gopika \
+                -d postgresql \
+                > /tmp/postgres-backup.sql
+              aws s3 cp \
+                /tmp/postgres-backup.sql \
+                s3://kubernetes-project/postgres-backup-$(date +%Y-%m-%d-%H%M%S).sql \
+                --endpoint-url https://fra1.digitaloceanspaces.com
+            env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: k8-secret
+                  key: POSTGRES_PASSWORD
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: k8-secret
+                  key: POSTGRES_USER 
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: k8-secret
+                  key: POSTGRES_DB          
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: k8-backup-secret
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: k8-backup-secret
+                  key: secret-key
+          restartPolicy: OnFailure

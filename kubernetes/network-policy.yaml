@@ -13,6 +13,13 @@ spec:
     - podSelector:
         matchLabels:
            app: api
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: backup
+      podSelector:
+        matchLabels:
+          backup: postgres        
     ports:
     - protocol: TCP
       port: 5432      
