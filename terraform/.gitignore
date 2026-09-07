@@ -7,6 +7,7 @@ crash.log
 
 # Secrets
 secret.yaml
+backup-secret.yaml 
 
 #OS / editor
 .DS_Store

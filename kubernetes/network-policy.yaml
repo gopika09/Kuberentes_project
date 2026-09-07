@@ -19,7 +19,7 @@ spec:
           kubernetes.io/metadata.name: backup
       podSelector:
         matchLabels:
-          backup: postgres        
+          backup: postgres     
     ports:
     - protocol: TCP
       port: 5432      
