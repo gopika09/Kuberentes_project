@@ -10,5 +10,6 @@ kubernetes/secret.yaml
 kubernetes/backup/backup-secret.yaml 
 
 #OS / editor
-kubernetes/.DS_Store
+
+**/.DS_Store
 .vscode/
