@@ -6,8 +6,8 @@
 crash.log
 
 # Secrets
-kubernetes/secret.yaml
-kubernetes/backup-secret.yaml 
+secret.yaml
+backup/backup-secret.yaml 
 
 #OS / editor
 .DS_Store
