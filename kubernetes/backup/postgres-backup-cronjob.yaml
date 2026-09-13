@@ -14,16 +14,23 @@ spec:
         spec:
           containers:
           - name: backup
-            image: amazon/aws-cli
+            image: postgres:16-alpine
             command:
             - /bin/sh
             - -c
             - |
+              set -e 
+
+              apk add --no-cache aws-cli
+
               pg_dump \
                 -h postgresql-service.default.svc.cluster.local \
                 -U gopika \
                 -d postgresql \
                 > /tmp/postgres-backup.sql
+
+                test -s /tmp/postgres-backup.sql
+
               aws s3 cp \
                 /tmp/postgres-backup.sql \
                 s3://kubernetes-project/postgres-backup-$(date +%Y-%m-%d-%H%M%S).sql \
