@@ -5,7 +5,7 @@ This project demonstrates the deployment and operation of a production-style clo
 The project focuses not only on deploying an application, but also on addressing important operational aspects of a cloud workload, including infrastructure provisioning, networking, persistent storage, security, monitoring, database backup, disaster recovery, and workload resilience.
 
 ## Architecture
-
+![diagram]kubernetes/project.png
 ## Tools and Technologies
 
 - **Cloud Platform:** DigitalOcean
