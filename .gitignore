@@ -1,1 +1,3 @@
 .DS_Store
+kubernetes/secret.yaml
+kubernetes/backup/backup-secret.yaml
